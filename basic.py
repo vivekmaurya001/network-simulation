@@ -1,9 +1,4 @@
-"""
-Network Protocol Simulation
-Implements 5-layer protocol stack with DOS to KPI improvement
-Author: Network Simulation
-Date: 2026
-"""
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +6,6 @@ from dataclasses import dataclass
 from typing import List, Tuple
 import time
 import json
-from pathlib import Path
 
 # ============================================================================
 # CONFIGURATION
@@ -23,7 +17,7 @@ class NetworkConfig:
     num_nodes: int = 6
     packet_size: int = 1024  # bytes
     num_packets: int = 100
-    snr_db: float = 1.0  # Signal-to-Noise Ratio in dB
+    snr_db: float = 20.0  # Signal-to-Noise Ratio in dB
     bandwidth: float = 10e6  # 10 MHz
     distance: float = 100.0  # meters between nodes
     
@@ -39,7 +33,18 @@ class NodeAddress:
 # ============================================================================
 
 class ApplicationLayer:
-    """Application Layer - Generates data and measures KPIs"""
+    """
+    Application Layer - IoT Temperature Monitoring System
+    
+    This application simulates a real-world IoT sensor network that:
+    - Monitors temperature from multiple sensor nodes
+    - Generates periodic sensor readings
+    - Sends data from sensor nodes to a central monitoring station
+    - Measures network performance (KPIs)
+    
+    Use Case: Smart Building Climate Control System
+    Node 1: Temperature Sensor in Server Room → Node 5: Central Monitoring Server
+    """
     
     def __init__(self, config: NetworkConfig):
         self.config = config
@@ -50,11 +55,45 @@ class ApplicationLayer:
             'jitter': 0.0,
             'success_rate': 0.0
         }
+        self.sensor_id = "TEMP_SENSOR_001"
+        self.location = "Server_Room_A"
         
     def generate_data(self, packet_id: int) -> bytes:
-        """Generate application data"""
-        data = f"Packet_{packet_id}_Data_" + "X" * (self.config.packet_size - 20)
-        return data.encode()[:self.config.packet_size]
+        """
+        Generate IoT sensor data (Temperature readings)
+        
+        Simulates a real temperature sensor sending data to monitoring server:
+        - Sensor ID and location
+        - Temperature reading (realistic values between 18-28°C)
+        - Humidity reading (30-70%)
+        - Timestamp
+        - Packet sequence number
+        """
+        import time
+        
+        # Generate realistic sensor data
+        temperature = 20.0 + np.random.uniform(-2, 8)  # 18-28°C range
+        humidity = 50.0 + np.random.uniform(-20, 20)    # 30-70% range
+        timestamp = time.time()
+        
+        # Create IoT data packet in JSON-like format
+        sensor_data = {
+            'sensor_id': self.sensor_id,
+            'location': self.location,
+            'temperature_celsius': round(temperature, 2),
+            'humidity_percent': round(humidity, 2),
+            'timestamp': timestamp,
+            'packet_number': packet_id,
+            'alert': 'HIGH_TEMP' if temperature > 26 else 'NORMAL'
+        }
+        
+        # Convert to string and pad to packet size
+        data_str = json.dumps(sensor_data)
+        padding_needed = self.config.packet_size - len(data_str)
+        if padding_needed > 0:
+            data_str += ' ' * padding_needed
+        
+        return data_str.encode()[:self.config.packet_size]
     
     def calculate_kpis(self, sent_packets: int, received_packets: int, 
                        latencies: List[float], start_time: float, end_time: float) -> dict:
@@ -339,7 +378,8 @@ class NetworkSimulator:
     def simulate_transmission(self, source_node: int, dest_node: int):
         """Simulate complete network transmission"""
         print("\n" + "="*60)
-        print(f"STARTING NETWORK SIMULATION: Node {source_node} -> Node {dest_node}")
+        print(f"STARTING IoT SENSOR TRANSMISSION")
+        print(f"Temperature Sensor (Node {source_node}) → Monitoring Server (Node {dest_node})")
         print("="*60)
         
         # Find routing path
@@ -360,9 +400,19 @@ class NetworkSimulator:
             
             packet_start = time.time()
             
-            # Step 1: Application Layer - Generate data
+            # Step 1: Application Layer - Generate IoT sensor data
             data = self.app_layer.generate_data(packet_id)
-            print(f"[Application] Generated {len(data)} bytes of data")
+            
+            # Display the sensor reading
+            try:
+                sensor_reading = json.loads(data.decode().strip())
+                print(f"[Application] IoT Sensor Data Generated:")
+                print(f"  └─ Sensor: {sensor_reading['sensor_id']} at {sensor_reading['location']}")
+                print(f"  └─ Temperature: {sensor_reading['temperature_celsius']}°C")
+                print(f"  └─ Humidity: {sensor_reading['humidity_percent']}%")
+                print(f"  └─ Status: {sensor_reading['alert']}")
+            except:
+                print(f"[Application] Generated {len(data)} bytes of sensor data")
             
             # Step 2: Transport Layer - Create packet
             transport_packet = self.transport_layer.create_packet(data, packet_id)
@@ -482,9 +532,8 @@ class NetworkSimulator:
         ax4.set_title('Transmission Success Rate')
         
         plt.tight_layout()
-        output_path = Path(__file__).resolve().parent / 'simulation_results.png'
-        plt.savefig(output_path, dpi=300, bbox_inches='tight')
-        print(f"\n[Visualization] Results saved to '{output_path}'")
+        plt.savefig('./simulation_results.png', dpi=300, bbox_inches='tight')
+        print("\n[Visualization] Results saved to 'simulation_results.png'")
         plt.show()
 
 # ============================================================================
@@ -495,14 +544,19 @@ def main():
     """Main execution function"""
     print("\n" + "="*60)
     print(" NETWORK PROTOCOL SIMULATION - JoMaRe ASSIGNMENT")
+    print(" IoT Temperature Monitoring System")
     print(" DOS to KPI Improvement Implementation")
+    print("="*60)
+    print("\n📡 APPLICATION: IoT Temperature Sensor Network")
+    print("   Sensor Node (1) → Central Server (5)")
+    print("   Monitoring: Server Room Temperature & Humidity")
     print("="*60)
     
     # Configuration
     config = NetworkConfig(
         num_nodes=6,
         packet_size=1024,
-        num_packets=50,  # Simulate 50 packets
+        num_packets=50,  # Simulate 50 sensor readings
         snr_db=15.0,     # Signal-to-Noise Ratio
         bandwidth=10e6,
         distance=100.0
