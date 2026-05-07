@@ -1,5 +1,6 @@
 # Network Protocol Simulation
 ## IoT Temperature Monitoring System
+### WITH PER-LAYER KPI AND QOS METRICS
 
 ---
 
@@ -168,15 +169,28 @@ Each sensor reading contains:
 
 ## SIMULATION RESULTS
 
-### Key Performance Indicators (KPIs)
+### Overall Key Performance Indicators (KPIs)
 
 | Metric | Value | Status | Impact on IoT Application |
 |--------|-------|--------|---------------------------|
-| **Throughput** | 0.82 Mbps | Good | Sufficient for continuous sensor data |
-| **Average Latency** | 9.99 ms | Excellent | Real-time monitoring possible |
+| **Throughput** | ~0.82 Mbps | Good | Sufficient for continuous sensor data |
+| **Average Latency** | ~9.99 ms | Excellent | Real-time monitoring possible |
 | **Packet Loss** | 0.00% | Perfect | No data loss, all readings received |
-| **Jitter** | 61.04 ms | Moderate | Acceptable for monitoring (not control) |
+| **Jitter** | Moderate | Acceptable | Acceptable for monitoring (not control) |
 | **Success Rate** | 100.00% | Perfect | Reliable system |
+
+### Per-Layer KPI and QoS Metrics
+The simulation now tracks comprehensive metrics for **each layer** (Application, Transport, Network, Data Link, and Physical). For each layer, it evaluates:
+- **KPI Metrics:** Throughput, Average Processing Time, Success/Error Rate, Protocol Overhead, and Bytes Processed.
+- **QoS Metrics:** Reliability, Efficiency, Performance, and Overall QoS Score.
+
+### Visualized Results
+Upon completion, the simulation generates a comprehensive performance dashboard (`simulation_results_with_layer_kpi.png`) containing:
+- Packet Transmission Statistics & Latency Distribution
+- Overall KPIs Summary
+- Per-Layer Throughput, Processing Time, and Success Rate
+- QoS Metrics Comparison Across All Layers
+- Protocol Overhead by Layer
 
 ### What This Means for the IoT Application:
 
