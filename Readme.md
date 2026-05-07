@@ -1,9 +1,13 @@
-# Network Protocol Simulation
-## IoT Temperature Monitoring System
+# IoT Temperature Monitoring System
 
-**Authors:**
-- Aditya Khetrapal(Roll No. :- 23095005)
-- Vivek Maurya(Roll No. :- 23095122)
+<div style="border: 2px solid #777; padding: 15px; border-radius: 8px; display: inline-block;">
+<span style="font-family: 'Verdana', Geneva, sans-serif; font-size: 1.1em; font-weight: bold;">Authors:</span>
+<ul style="margin-top: 8px; margin-bottom: 0; padding-left: 20px;">
+  <li><span style="font-family: 'Verdana', Geneva, sans-serif; font-weight: bold;">Aditya Khetrapal (Roll No. :- 23095005)</span></li>
+  <li><span style="font-family: 'Verdana', Geneva, sans-serif; font-weight: bold;">Vivek Maurya (Roll No. :- 23095122)</span></li>
+</ul>
+</div>
+
 ---
 
 ## APPLICATION OVERVIEW
