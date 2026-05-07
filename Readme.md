@@ -2,6 +2,9 @@
 ## IoT Temperature Monitoring System
 ### WITH PER-LAYER KPI AND QOS METRICS
 
+**Authors:**
+- Aditya Khetrapal(Roll No. :- 23095005)
+- Vivek Maurya(Roll No. :- 23095122)
 ---
 
 ## APPLICATION OVERVIEW
@@ -348,7 +351,3 @@ pip install numpy matplotlib scipy
 ```bash
 python basic.py
 ```
-
-
-**END OF DOCUMENTATION**
-
