@@ -1,6 +1,5 @@
 # Network Protocol Simulation
 ## IoT Temperature Monitoring System
-### WITH PER-LAYER KPI AND QOS METRICS
 
 **Authors:**
 - Aditya Khetrapal(Roll No. :- 23095005)
