@@ -312,7 +312,7 @@ PACKET 1/50
 
 ---
 
-## 🔧 TECHNICAL SPECIFICATIONS
+## TECHNICAL SPECIFICATIONS
 
 ### Application Layer Details:
 
@@ -341,7 +341,7 @@ PACKET 1/50
 
 ---
 
-## 🚀 HOW TO RUN THE APPLICATION
+## HOW TO RUN THE APPLICATION
 
 ### Prerequisites:
 ```bash
